@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
+import _ from 'lodash';
 import {BaseComponent} from '../../commons';
 
 /**
@@ -47,12 +48,12 @@ export default class Text extends BaseComponent {
     const {margins} = this.state;
     const textStyle = [
       this.styles.container,
-      typography,
+      !_.isEmpty(typography) && typography,
       color && {color},
-      margins,
+      !_.isEmpty(margins) && margins,
       center && {textAlign: 'center'},
       style,
-    ];
+    ].filter(Boolean); // cleans undefined or falsy values
     const children = uppercase ? this.transformToUppercase(this.props.children) : this.props.children;
 
     return (

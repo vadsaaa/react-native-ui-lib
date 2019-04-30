@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text should render clean text 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`Text spacings modifiers should render text with horizontal margin 1`] = `
+<Text
+  marginH-20={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Object {
+        "marginHorizontal": 20,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`Text spacings modifiers should render text with right and left margin 1`] = `
+<Text
+  marginL-10={true}
+  marginR-20={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Object {
+        "marginLeft": 10,
+        "marginRight": 20,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`Text spacings modifiers should render text with top and bottom margin 1`] = `
+<Text
+  marginL-10={true}
+  marginR-20={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Object {
+        "marginLeft": 10,
+        "marginRight": 20,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`Text spacings modifiers should render text with vertical margin 1`] = `
+<Text
+  marginV-20={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Object {
+        "marginVertical": 20,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`Text style modifiers should render text with red50 as a color 1`] = `
+<Text
+  red50={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Object {
+        "color": "#F79A94",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`Text style modifiers should render text with text30 typography modifier 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Object {
+        "fontFamily": undefined,
+        "fontSize": 36,
+        "fontWeight": "200",
+        "lineHeight": 46,
+      },
+    ]
+  }
+  text30={true}
+/>
+`;
+
+exports[`Text style modifiers should render text with white color modifier 1`] = `
+<Text
+  bg-white={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+    ]
+  }
+/>
+`;
