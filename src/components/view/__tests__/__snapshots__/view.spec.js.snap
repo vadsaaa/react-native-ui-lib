@@ -57,6 +57,22 @@ exports[`View should render clean view 1`] = `
 />
 `;
 
+exports[`View should support theme props should have default theme props 1`] = `
+<View
+  bg-dark80={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F2F4F5",
+      },
+      Object {
+        "flex": 1,
+      },
+    ]
+  }
+/>
+`;
+
 exports[`View spacings modifiers should render view with horizontal margin 1`] = `
 <View
   marginH-20={true}

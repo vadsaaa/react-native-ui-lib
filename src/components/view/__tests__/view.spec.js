@@ -1,11 +1,27 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import View from '../index';
+import {ThemeManager} from '../../../style';
 
 describe('View', () => {
+  beforeEach(() => {
+    ThemeManager.setComponentTheme('View', undefined);
+  });
+
   it('should render clean view', () => {
     const tree = renderer.create(<View />).toJSON();
     expect(tree).toMatchSnapshot();
+  });
+
+  describe('should support theme props', () => {
+    it('should have default theme props', () => {
+      ThemeManager.setComponentTheme('View', {
+        'bg-dark80': true,
+        flex: true,
+      });
+      const tree = renderer.create(<View />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
 
   describe('layout modifiers', () => {
