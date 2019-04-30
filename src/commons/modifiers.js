@@ -7,7 +7,6 @@ export const MARGIN_KEY_PATTERN = new RegExp(`margin[LTRBHV]?-([0-9]*|${Spacings
 export const ALIGNMENT_KEY_PATTERN = /(left|top|right|bottom|center|centerV|centerH|spread)/;
 
 export function extractColorValue(props) {
-  // const props = this.getThemeProps();
   const allColorsKeys = _.keys(Colors);
   const colorPropsKeys = _.chain(props)
     .keys()
@@ -207,8 +206,8 @@ export function extractOwnProps(props, ignoreProps) {
   return ownProps;
 }
 
-export function getThemeProps(props = this.props, context = this.context) {
-  const componentName = this.displayName || this.constructor.displayName || this.constructor.name;
+export function getThemeProps(props = this.props, context = this.context, displayName) {
+  const componentName = displayName || this.displayName || this.constructor.displayName || this.constructor.name;
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
     themeProps = ThemeManager.components[componentName](props, context);
@@ -226,34 +225,43 @@ export function generateModifiersStyle(
     margins: true,
     alignments: true,
     flex: true,
+    color: true,
+    typography: true
   },
   props = this.props,
 ) {
   const style = {};
 
   if (options.backgroundColor) {
-    style.backgroundColor = this.extractBackgroundColorValue(props);
+    style.backgroundColor = extractBackgroundColorValue(props);
   }
   if (options.borderRadius) {
-    style.borderRadius = this.extractBorderRadiusValue(props);
+    style.borderRadius = extractBorderRadiusValue(props);
   }
   if (options.paddings) {
-    style.paddings = this.extractPaddingValues(props);
+    style.paddings = extractPaddingValues(props);
   }
   if (options.margins) {
-    style.margins = this.extractMarginValues(props);
+    style.margins = extractMarginValues(props);
   }
   if (options.alignments) {
-    style.alignments = this.extractAlignmentsValues(props);
+    style.alignments = extractAlignmentsValues(props);
   }
   if (options.flex) {
-    style.flexStyle = this.extractFlexStyle(props);
+    style.flexStyle = extractFlexStyle(props);
+  }
+  
+  if (options.color) {
+    style.color = extractColorValue(props);
+  }
+  if (options.typography) {
+    style.typography = extractTypographyValue(props);
   }
 
   return style;
 }
 
-
+// TODO: add check for color & typography values
 export function getAlteredModifiersOptions(currentProps, nextProps) {
   const allKeys = _.union([..._.keys(currentProps), ..._.keys(nextProps)]);
   const changedKeys = _.filter(allKeys, key => !_.isEqual(currentProps[key], nextProps[key]));

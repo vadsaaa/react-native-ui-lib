@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Component} from 'react';
 import {Text as RNText, StyleSheet} from 'react-native';
 import _ from 'lodash';
-import {BaseComponent} from '../../commons';
+import {BaseComponent, asBaseComponent, forwardRef} from '../../commons';
 
 /**
  * @description: A wrapper for Text component with extra functionality like modifiers support
@@ -10,7 +10,7 @@ import {BaseComponent} from '../../commons';
  * @extendslink: https://facebook.github.io/react-native/docs/text.html
  * @modifiers: margins, color, typography
  */
-export default class Text extends BaseComponent {
+class Text extends Component {
   static displayName = 'Text';
   static propTypes = {
     ...RNText.propTypes,
@@ -33,31 +33,28 @@ export default class Text extends BaseComponent {
   //   color: Colors.dark10,
   // }
 
-  generateStyles() {
-    this.styles = createStyles(this.props);
-  }
-
   setNativeProps(nativeProps) {
     this._root.setNativeProps(nativeProps); // eslint-disable-line
   }
 
   render() {
-    const color = this.getThemeProps().color || this.extractColorValue();
-    const typography = this.extractTypographyValue();
-    const {style, center, uppercase, ...others} = this.getThemeProps();
-    const {margins} = this.state;
+    const {style, center, uppercase, modifiers, forwardedRef, ...others} = this.props;
+    const color = this.props.color || modifiers.color;
+    const {margins, typography} = modifiers;
+
     const textStyle = [
-      this.styles.container,
+      styles.container,
       !_.isEmpty(typography) && typography,
       color && {color},
       !_.isEmpty(margins) && margins,
       center && {textAlign: 'center'},
       style,
     ].filter(Boolean); // cleans undefined or falsy values
+
     const children = uppercase ? this.transformToUppercase(this.props.children) : this.props.children;
 
     return (
-      <RNText {...others} style={textStyle} ref={this.setRef}>
+      <RNText {...others} style={textStyle} ref={forwardedRef}>
         {children}
       </RNText>
     );
@@ -71,10 +68,10 @@ export default class Text extends BaseComponent {
   }
 }
 
-function createStyles() {
-  return StyleSheet.create({
-    container: {
-      backgroundColor: 'transparent',
-    },
-  });
-}
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'transparent',
+  },
+});
+
+export default asBaseComponent(forwardRef(Text));

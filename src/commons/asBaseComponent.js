@@ -7,7 +7,7 @@ import UIComponent from './UIComponent';
 
 function asBaseComponent(WrappedComponent) {
   class BaseComponent extends UIComponent {
-    state = Modifiers.generateModifiersStyle(undefined, this.props);
+    state = Modifiers.generateModifiersStyle(undefined, this.getThemeProps());
 
     UNSAFE_componentWillReceiveProps(nextProps) {
       const options = Modifiers.getAlteredModifiersOptions(this.props, nextProps);
@@ -16,8 +16,12 @@ function asBaseComponent(WrappedComponent) {
       }
     }
 
+    getThemeProps() {
+      return Modifiers.getThemeProps(this.props, this.context, WrappedComponent.displayName);
+    }
+
     render() {
-      const themeProps = Modifiers.getThemeProps.call(WrappedComponent, this.props, this.context);
+      const themeProps = this.getThemeProps();
       const {forwardedRef, ...others} = themeProps;
       return <WrappedComponent /* {...this.props} */ {...others} modifiers={this.state} ref={forwardedRef} />;
     }
