@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {View as RNView, ViewPropTypes, SafeAreaView} from 'react-native';
+import _ from 'lodash';
 import {BaseComponent, asBaseComponent, forwardRef} from '../../commons';
 import * as Constants from '../../helpers/Constants';
 
@@ -43,20 +44,18 @@ class View extends PureComponent {
     const {backgroundColor, borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
     const Element = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
 
+    const modifiersStyle = [
+      backgroundColor && {backgroundColor},
+      borderRadius && {borderRadius},
+      flexStyle,
+      !_.isEmpty(paddings) && paddings,
+      !_.isEmpty(margins) && margins,
+      !_.isEmpty(alignments) && alignments,
+      style,
+    ].filter(Boolean); // cleans undefined or falsy values
+
     return (
-      <Element
-        {...others}
-        style={[
-          backgroundColor && {backgroundColor},
-          borderRadius && {borderRadius},
-          flexStyle,
-          paddings,
-          margins,
-          alignments,
-          style,
-        ]}
-        ref={forwardedRef}
-      >
+      <Element {...others} style={modifiersStyle} ref={forwardedRef}>
         {this.props.children}
       </Element>
     );
